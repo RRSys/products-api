@@ -1,4 +1,4 @@
-package com.rrsys.productsapi;
+package models;
 
 
 import com.sun.istack.NotNull;
