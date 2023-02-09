@@ -1,26 +1,12 @@
-package models;
+package com.rrsys.productsapi.Dtos;
 
-
-import com.sun.istack.NotNull;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
-@Table(name= "products")
-public class ProductsEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductDto {
     private UUID id;
-    @NotNull
     private String name;
-    @NotNull
     private String description;
-    @NotNull
-    private double amount;
-
+    private Double amount;
 
     public UUID getId() {
         return id;
@@ -46,11 +32,11 @@ public class ProductsEntity {
         this.description = description;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 }
