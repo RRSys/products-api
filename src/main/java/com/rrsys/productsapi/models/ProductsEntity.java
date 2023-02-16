@@ -2,6 +2,7 @@ package com.rrsys.productsapi.models;
 
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.Type;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
@@ -12,7 +13,8 @@ import java.util.UUID;
 public class ProductsEntity {
 
     @Id
-    @Column (name = "id")
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(columnDefinition = "varchar(255)")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @NotNull

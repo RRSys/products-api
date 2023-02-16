@@ -3,6 +3,7 @@ package com.rrsys.productsapi.controllers;
 import com.rrsys.productsapi.Dtos.ProductDto;
 import com.rrsys.productsapi.models.ProductsEntity;
 import com.rrsys.productsapi.services.ProductService;
+import org.apache.coyote.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
@@ -36,5 +40,13 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<Object> findAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)Pageable pageable){
             return ResponseEntity.status(HttpStatus.OK).body(service.getAll(pageable));
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable UUID id){
+        Optional<ProductsEntity> productsEntityOptional = service.getById(id);
+        return productsEntityOptional.<ResponseEntity<Object>>map(productsEntity -> ResponseEntity.status(HttpStatus.OK).
+                body(productsEntity)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Product not found"));
+
     }
 }

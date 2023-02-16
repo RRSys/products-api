@@ -6,7 +6,8 @@ import com.rrsys.productsapi.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductsEntity get(UUID id) {
-        return repository.findById(id).get();
+    public Optional<ProductsEntity> getById(UUID id) {
+        return repository.findById(id);
     }
 
     @Override
