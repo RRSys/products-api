@@ -49,4 +49,13 @@ public class ProductController {
                 .body("Product not found"));
 
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable(value="id") UUID id){
+        Optional<ProductsEntity> productsOptional = service.getById(id);
+        if (!productsOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+        }
+        service.delete(productsOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Product deleted");
+    }
 }

@@ -42,4 +42,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductsEntity update(ProductsEntity entity) {
         return null;
     }
+
+    @Override
+    public void delete(ProductsEntity entity) {
+        repository.delete(entity);
+    }
 }
