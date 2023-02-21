@@ -13,6 +13,5 @@ public interface ProductService {
     Optional<ProductsEntity> getById(UUID id);
     ProductsEntity create(ProductsEntity entity);
     ProductsEntity update(ProductsEntity entity);
-
-
+    void delete(ProductsEntity entity);
 }
