@@ -3,21 +3,15 @@ package com.rrsys.productsapi.controllers;
 import com.rrsys.productsapi.Dtos.ProductDto;
 import com.rrsys.productsapi.models.ProductsEntity;
 import com.rrsys.productsapi.services.ProductService;
-import org.apache.coyote.Response;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -58,4 +52,16 @@ public class ProductController {
         service.delete(productsOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Product deleted");
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable UUID id,@RequestBody @Valid ProductDto productDto){
+        ProductsEntity productsEntity = new ProductsEntity();
+        BeanUtils.copyProperties(productDto, productsEntity);
+        service.update(id,productsEntity);
+        return ResponseEntity.noContent().build();
+
+    }
+
+
+
 }

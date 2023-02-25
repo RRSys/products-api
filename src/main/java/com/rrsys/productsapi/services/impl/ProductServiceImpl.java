@@ -39,8 +39,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductsEntity update(ProductsEntity entity) {
-        return null;
+    public ProductsEntity update(UUID id,ProductsEntity newValues) {
+        //Buscando dado no banco
+        ProductsEntity productDb = repository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Product not found"));
+        //Alterando novo dado
+        productDb.setDescription(newValues.getDescription());
+        productDb.setName(newValues.getName());
+        productDb.setAmount(newValues.getAmount());
+        //Salvando alterações
+        return repository.save(productDb);
     }
 
     @Override
