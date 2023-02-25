@@ -12,6 +12,6 @@ public interface ProductService {
     Page<ProductsEntity> getAll(Pageable pageable);
     Optional<ProductsEntity> getById(UUID id);
     ProductsEntity create(ProductsEntity entity);
-    ProductsEntity update(ProductsEntity entity);
+    ProductsEntity update(UUID id, ProductsEntity entity);
     void delete(ProductsEntity entity);
 }
