@@ -30,6 +30,13 @@ public class ProductsExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, new ErrorMessage(userMessage, errorMessage), headers, HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler({NoSuchElementException.class})
+    public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex, WebRequest request) {
+        String userMessage = messageSource.getMessage("product Not found", null, LocaleContextHolder.getLocale());
+        String devMessage = ex.toString();
+        return handleExceptionInternal(ex, new ErrorMessage(userMessage,devMessage), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
     }
 
 
