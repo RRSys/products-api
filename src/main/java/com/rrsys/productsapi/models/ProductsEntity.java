@@ -24,6 +24,19 @@ public class ProductsEntity {
     @NotNull
     private double amount;
 
+    public ProductsEntity() {
+    }
+
+    public ProductsEntity(double amount) {
+        this.amount = amount;
+    }
+
+    public ProductsEntity(UUID id, String name, String description, double amount) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.amount = amount;
+    }
 
     public UUID getId() {
         return id;

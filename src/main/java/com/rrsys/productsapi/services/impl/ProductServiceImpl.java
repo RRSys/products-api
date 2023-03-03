@@ -39,33 +39,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductsEntity update(UUID id,ProductsEntity newValues) {
+    public ProductsEntity update(UUID id, ProductsEntity newValues) {
         //Buscando dado no banco
         ProductsEntity productDb = repository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new RuntimeException("Product not found"));
         //Alterando novo dado
         productDb.setDescription(newValues.getDescription());
         productDb.setName(newValues.getName());
-        productDb.setAmount(newValues.getAmount());
 
-        productPercent(id,newValues);
-            //Salvando alterações
-        return repository.save(productDb);
-
-
-
-    }
-    public void productPercent(UUID id, ProductsEntity newValue){
-        ProductsEntity productDb = repository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Product not found"));
-
+        //Verificação se o novo valor que for passado foi acima de 51%, é lançada uma exceçao
         double percent = productDb.getAmount() / 100 * 50;
-
-        if (newValue.getAmount() > (percent + productDb.getAmount())) {
-            productDb.setAmount(newValue.getAmount());
-        } else {
+        if (newValues.getAmount() > (percent + productDb.getAmount())) {
             throw new RuntimeException("Product not accept");
         }
+        productDb.setAmount(newValues.getAmount());
+        //Salvando alterações
+        return repository.save(productDb);
     }
 
     @Override
