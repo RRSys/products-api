@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Product not accept");
         } 
             productDb.setAmount(newValues.getAmount());
-        }
+        
 
             //Salvando alterações
         return repository.save(productDb);
