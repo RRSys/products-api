@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
         double percent = productDb.getAmount() / 100 * 51;
         if (newValues.getAmount() > (percent + productDb.getAmount())) {
             throw new RuntimeException("Product not accept");
-        } else {
+        } 
             productDb.setAmount(newValues.getAmount());
         }
 
