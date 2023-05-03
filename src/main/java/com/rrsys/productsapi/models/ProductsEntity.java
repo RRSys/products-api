@@ -24,12 +24,16 @@ public class ProductsEntity {
     @NotNull
     private double amount;
 
-    public ProductsEntity() {
+    public ProductsEntity(){
+    }
+    public ProductsEntity(String name) {
+        this.name = name;
     }
 
     public ProductsEntity(double amount) {
         this.amount = amount;
     }
+
 
     public ProductsEntity(UUID id, String name, String description, double amount) {
         this.id = id;
