@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,13 +30,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<ProductsEntity> getById(UUID id) {
+
         return repository.findById(id);
+
     }
 
     @Override
     public ProductsEntity create(ProductsEntity entity) {
-        ProductsEntity product = repository.save(entity);
-        return product;
+        ProductsEntity entityDb = repository.findByName(entity.getName());
+
+        if (entityDb.getName().isBlank()){
+            return repository.save(entity);
+
+        }
+        throw new RuntimeException("Erro");
     }
 
     @Override
@@ -46,7 +54,6 @@ public class ProductServiceImpl implements ProductService {
         //Alterando novo dado
         productDb.setDescription(newValues.getDescription());
         productDb.setName(newValues.getName());
-
         //Verificação se o novo valor que for passado foi acima de 51%, é lançada uma exceçao
         double percent = productDb.getAmount() / 100 * 50;
         if (newValues.getAmount() > (percent + productDb.getAmount())) {
