@@ -30,20 +30,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<ProductsEntity> getById(UUID id) {
-
         return repository.findById(id);
-
     }
 
     @Override
     public ProductsEntity create(ProductsEntity entity) {
-        ProductsEntity entityDb = repository.findByName(entity.getName());
-
-        if (entityDb.getName().isBlank()){
-            return repository.save(entity);
-
-        }
-        throw new RuntimeException("Erro");
+        return repository.save(entity);
     }
 
     @Override
