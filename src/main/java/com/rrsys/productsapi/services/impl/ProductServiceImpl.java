@@ -1,5 +1,6 @@
 package com.rrsys.productsapi.services.impl;
 
+import com.rrsys.productsapi.exceptionHandler.EntityAlreadyExistsException;
 import com.rrsys.productsapi.models.ProductsEntity;
 import com.rrsys.productsapi.repositories.ProductRepository;
 import com.rrsys.productsapi.services.ProductService;
@@ -35,7 +36,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductsEntity create(ProductsEntity entity) {
-        return repository.save(entity);
+
+        if(repository.findByName(entity.getName()) != null ) { throw new EntityAlreadyExistsException("name already exist"); }
+
+        ProductsEntity entityDb = repository.save(entity);
+        return entityDb;
+
     }
 
     @Override
