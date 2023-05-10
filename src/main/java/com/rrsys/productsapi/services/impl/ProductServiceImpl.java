@@ -1,5 +1,6 @@
 package com.rrsys.productsapi.services.impl;
 
+import com.rrsys.productsapi.exceptionHandler.EntityAlreadyExistsException;
 import com.rrsys.productsapi.models.ProductsEntity;
 import com.rrsys.productsapi.repositories.ProductRepository;
 import com.rrsys.productsapi.services.ProductService;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,8 +36,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductsEntity create(ProductsEntity entity) {
-        ProductsEntity product = repository.save(entity);
-        return product;
+
+        if(repository.findByName(entity.getName()) != null ) { throw new EntityAlreadyExistsException("name already exist"); }
+
+        ProductsEntity entityDb = repository.save(entity);
+        return entityDb;
+
     }
 
     @Override
@@ -46,7 +52,6 @@ public class ProductServiceImpl implements ProductService {
         //Alterando novo dado
         productDb.setDescription(newValues.getDescription());
         productDb.setName(newValues.getName());
-
         //Verificação se o novo valor que for passado foi acima de 51%, é lançada uma exceçao
         double percent = productDb.getAmount() / 100 * 50;
         if (newValues.getAmount() > (percent + productDb.getAmount())) {
